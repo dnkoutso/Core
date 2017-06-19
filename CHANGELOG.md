@@ -25,6 +25,10 @@
 
 ##### Bug Fixes
 
+* Cache target definition label value  
+  [Dimitris Koutsogiorgas](https://github.com/dnkoutso)
+  [#385](https://github.com/CocoaPods/Core/pull/385)
+
 * Correctly include parent dependencies when parsing testspecs
   [Dimitris Koutsogiorgas](https://github.com/dnkoutso)
   [#384](https://github.com/CocoaPods/Core/pull/384)
