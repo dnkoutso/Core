@@ -4,7 +4,9 @@
 
 ##### Enhancements
 
-* None.  
+* Add Podfile DSL for `script_phase`  
+  [Dimitris Koutsogiorgas](https://github.com/dnkoutso)
+  [#389](https://github.com/CocoaPods/Core/pull/389)
 
 ##### Bug Fixes
 
