@@ -366,6 +366,22 @@ module Pod
       end
     end
 
+
+    #-----------------------------------------------------------------------------#
+
+    describe 'Script Phases' do
+      before do
+        @spec = Spec.new do |spec|
+          spec.name = 'Spec'
+          spec.script_phases = { :name => 'Shit' }, { :name => 'Shit2' }
+        end
+      end
+
+      it 'allows you to specify a script phase' do
+        @spec.attributes_hash['script_phases'].should == { 'name' => 'Shit' }
+      end
+    end
+
     #-----------------------------------------------------------------------------#
 
     describe 'Test specs' do
@@ -440,7 +456,7 @@ module Pod
         end
         singularized.map { |attr| attr.name.to_s }.sort.should == %w(
           authors compiler_flags default_subspecs frameworks libraries
-          preserve_paths resource_bundles resources screenshots
+          preserve_paths resource_bundles resources screenshots script_phases
           vendored_frameworks vendored_libraries weak_frameworks
         )
       end

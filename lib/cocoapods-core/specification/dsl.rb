@@ -1366,6 +1366,24 @@ module Pod
 
       #------------------#
 
+      SCRIPT_PHASE_REQUIRED_KEYS = [:name, :script].freeze
+
+      SCRIPT_PHASE_OPTIONAL_KEYS = [:shell_path, :input_files, :output_files, :show_env_vars_in_log].freeze
+
+      ALL_SCRIPT_PHASE_KEYS = (SCRIPT_PHASE_REQUIRED_KEYS + SCRIPT_PHASE_OPTIONAL_KEYS).freeze
+
+      # @!method script_phase=(script_phase)
+      #
+      # TODO
+      #
+      attribute :script_phases,
+                :types => [Hash],
+                :container => Array,
+                :singularize => true,
+                :keys      => ALL_SCRIPT_PHASE_KEYS
+
+      #------------------#
+
       # @!method default_subspecs=(subspec_array)
       #
       #   An array of subspecs names that should be used as preferred dependency.
