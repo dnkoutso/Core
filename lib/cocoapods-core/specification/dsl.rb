@@ -486,7 +486,7 @@ module Pod
       #     spec.deprecated = true
       #
       #   @param [Bool] flag
-      #           whether the library has been deprecated.
+      #          whether the library has been deprecated.
       #
       root_attribute :deprecated,
                      :types => [TrueClass, FalseClass],
@@ -1364,6 +1364,21 @@ module Pod
       attribute :test_type,
                 :types => [Symbol, String],
                 :multi_platform => false
+
+      # @!method requires_app_host=(flag)
+      #
+      #  Whether a test specification requires an app host to run tests. This only applies to test specifications.
+      #
+      #   @example
+      #
+      #     test_spec.requires_app_host = true
+      #
+      #   @param [Bool] flag
+      #          whether a test specification requires an app host to run tests.
+      #
+      attribute :requires_app_host,
+                :types => [TrueClass, FalseClass],
+                :default_value => false
 
       # Represents a test specification for the library. Here you can place all
       # your tests for your podspec along with the test dependencies.

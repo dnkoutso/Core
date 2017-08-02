@@ -218,6 +218,8 @@ module Pod
 
       # @!group Root spec validation helpers
 
+      # Performs validations related to the `authors` attribute.
+      #
       def _validate_authors(a)
         if a.is_a? Hash
           if a == { 'YOUR NAME HERE' => 'YOUR EMAIL HERE' }
@@ -227,6 +229,8 @@ module Pod
         end
       end
 
+      # Performs validations related to the `version` attribute.
+      #
       def _validate_version(v)
         if v.to_s.empty?
           results.add_error('version', 'A version is required.')
@@ -237,6 +241,7 @@ module Pod
       end
 
       # Performs validations related to the `module_name` attribute.
+      #
       def _validate_module_name(m)
         unless m.nil? || m =~ /^[a-z_][0-9a-z_]*$/i
           results.add_error('module_name', 'The module name of a spec' \
@@ -379,6 +384,8 @@ module Pod
         end
       end
 
+      # Performs validations related to the `test_type` attribute.
+      #
       def _validate_test_type(t)
         unless consumer.spec.test_specification?
           results.add_error('test_type', 'Test type can only be used for test specifications.')
@@ -388,6 +395,14 @@ module Pod
         unless supported_test_types.include?(t.to_s)
           results.add_error('test_type', "The test type `#{t}` is not supported. " \
             "Supported test type values are #{supported_test_types}.")
+        end
+      end
+
+      # Performs validations related to the `requires_app_host` attribute.
+      #
+      def _validate_requires_app_host(_s)
+        unless consumer.spec.test_specification?
+          results.add_error('requires_app_host', 'Attribute can only be used within test specifications.')
         end
       end
 
