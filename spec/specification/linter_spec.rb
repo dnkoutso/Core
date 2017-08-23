@@ -308,39 +308,6 @@ module Pod
         test_type_error.should.be.nil
       end
 
-      it 'checks that requires app host cannot be set on a root spec' do
-        podspec = 'Pod::Spec.new do |s|; s.requires_app_host = true; end'
-        path = SpecHelper.temporary_directory + 'BananaLib.podspec'
-        File.open(path, 'w') { |f| f.write(podspec) }
-        linter = Specification::Linter.new(path)
-        linter.lint
-        results = linter.results
-        requires_app_host = results.find { |result| result.to_s.downcase.include?('requires_app_host') }
-        requires_app_host.message.should.include?('Attribute can only be used within test specifications.')
-      end
-
-      it 'checks that requires app host cannot be set on a subspec' do
-        podspec = "Pod::Spec.new do |s|; s.subspec 'subspec' do |ss|; ss.requires_app_host = true; end end"
-        path = SpecHelper.temporary_directory + 'BananaLib.podspec'
-        File.open(path, 'w') { |f| f.write(podspec) }
-        linter = Specification::Linter.new(path)
-        linter.lint
-        results = linter.results
-        requires_app_host = results.find { |result| result.to_s.downcase.include?('requires_app_host') }
-        requires_app_host.message.should.include?('Attribute can only be used within test specifications.')
-      end
-
-      it 'checks that requires app host is allowed within test specs' do
-        podspec = 'Pod::Spec.new do |s|; s.test_spec do |ts|; ts.requires_app_host = true; end end'
-        path = SpecHelper.temporary_directory + 'BananaLib.podspec'
-        File.open(path, 'w') { |f| f.write(podspec) }
-        linter = Specification::Linter.new(path)
-        linter.lint
-        results = linter.results
-        requires_app_host = results.find { |result| result.to_s.downcase.include?('requires_app_host') }
-        requires_app_host.should.be.nil
-      end
-
       #------------------#
 
       it 'checks if the description is not an empty string' do

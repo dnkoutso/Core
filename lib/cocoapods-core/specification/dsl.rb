@@ -1365,20 +1365,21 @@ module Pod
                 :types => [Symbol, String],
                 :multi_platform => false
 
-      # @!method requires_app_host=(flag)
+      # Whether a test specification requires an app host to run tests. This only applies to test specifications.
       #
-      #  Whether a test specification requires an app host to run tests. This only applies to test specifications.
+      # ---
       #
-      #   @example
+      # @example
       #
-      #     test_spec.requires_app_host = true
+      #   test_spec.requires_app_host = true
       #
-      #   @param [Bool] flag
-      #          whether a test specification requires an app host to run tests.
+      # @param [Bool] requires_app_host
+      #        whether a test specification requires an app host to run tests.
       #
-      attribute :requires_app_host,
-                :types => [TrueClass, FalseClass],
-                :default_value => false
+      def requires_app_host=(requires_app_host)
+        raise Informative, 'Attribute can only be used within test specifications' unless @test_specification
+        attributes_hash['requires_app_host'] = requires_app_host
+      end
 
       # Represents a test specification for the library. Here you can place all
       # your tests for your podspec along with the test dependencies.

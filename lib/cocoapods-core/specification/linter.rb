@@ -398,14 +398,6 @@ module Pod
         end
       end
 
-      # Performs validations related to the `requires_app_host` attribute.
-      #
-      def _validate_requires_app_host(_s)
-        unless consumer.spec.test_specification?
-          results.add_error('requires_app_host', 'Attribute can only be used within test specifications.')
-        end
-      end
-
       # Performs validations related to github sources.
       #
       def perform_github_source_checks(s)
