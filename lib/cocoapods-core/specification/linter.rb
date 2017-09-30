@@ -408,6 +408,10 @@ module Pod
           unless missing_required_keys.empty?
             results.add_error('script_phases', "Missing required shell script phase options `#{missing_required_keys.join(', ')}` in script phase `#{script_phase[:name]}`.")
           end
+          unless Specification::EXECUTION_PLACEMENT_KEYS.include?(script_phase[:execution_placement])
+            results.add_error('script_phases', "Invalid execution placement value `#{script_phase[:execution_placement]}` in shell script `#{script_phase[:name]}`. " \
+            "Available options are `#{Specification::EXECUTION_PLACEMENT_KEYS}`.")
+          end
         end
       end
 

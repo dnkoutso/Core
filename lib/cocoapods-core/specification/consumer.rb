@@ -381,7 +381,11 @@ module Pod
       def _prepare_script_phases(value)
         if value
           value.map do |script_phase|
-            Specification.convert_keys_to_symbol(script_phase) if script_phase.is_a?(Hash)
+            if script_phase.is_a?(Hash)
+              phase = Specification.convert_keys_to_symbol(script_phase)
+              phase[:execution_placement] = :any unless phase.key?(:execution_placement)
+              phase
+            end
           end.compact
         end
       end
