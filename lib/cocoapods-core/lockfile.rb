@@ -77,7 +77,7 @@ module Pod
 
     # Returns the version of the given Pod.
     #
-    # @param [name] The name of the Pod (root name of the specification).
+    # @param [String] pod_name The name of the Pod (root name of the specification).
     #
     # @return [Version] The version of the pod.
     #
@@ -94,7 +94,7 @@ module Pod
 
     # Returns the checksum for the given Pod.
     #
-    # @param [name] The name of the Pod (root name of the specification).
+    # @param [String] name The name of the Pod (root name of the specification).
     #
     # @return [String] The checksum of the specification for the given Pod.
     #
@@ -109,6 +109,7 @@ module Pod
     #
     # @note   It includes only the dependencies explicitly required in the
     #         podfile and not those triggered by the Resolver.
+
     def dependencies
       unless @dependencies
         data = internal_data['DEPENDENCIES'] || []
@@ -220,6 +221,13 @@ module Pod
       @checkout_options_data ||= internal_data['CHECKOUT OPTIONS'] || {}
     end
 
+    # @return [Hash{String => Version}] A Hash containing the checksums of the
+    #         specification by the name of their root.
+    #
+    def checksum_data
+      @checksum_data ||= internal_data['SPEC CHECKSUMS'] || {}
+    end
+
     # @return [Hash{String => Version}] a Hash containing the name of the root
     #         specification of the installed Pods as the keys and their
     #         corresponding {Version} as the values.
@@ -227,13 +235,6 @@ module Pod
     def pod_versions
       generate_pod_names_and_versions unless @pod_versions
       @pod_versions
-    end
-
-    # @return [Hash{String => Version}] A Hash containing the checksums of the
-    #         specification by the name of their root.
-    #
-    def checksum_data
-      internal_data['SPEC CHECKSUMS'] || {}
     end
 
     #-------------------------------------------------------------------------#
@@ -435,10 +436,9 @@ module Pod
             tmp[name] = deps
           end
         end
-        pod_and_deps = tmp.sort_by(&:first).map do |name, deps|
+        tmp.sort_by(&:first).map do |name, deps|
           deps.empty? ? name : { name => deps }
         end
-        pod_and_deps
       end
 
       # Generates the list of the dependencies of the Podfile.
