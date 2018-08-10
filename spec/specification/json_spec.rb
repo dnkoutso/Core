@@ -272,6 +272,61 @@ module Pod
         result = Specification.from_hash(@spec.to_hash)
         result.should == @spec
       end
+
+      describe 'Swift Version Support' do
+        it 'writes swift version in singular form' do
+          @spec.swift_version = '1.0'
+          hash = @spec.to_hash
+          hash['swift_versions'].should == '1.0'
+        end
+
+        it 'writes swift version pluralized' do
+          @spec.swift_versions = ['1.0']
+          hash = @spec.to_hash
+          hash['swift_versions'].should == ['1.0']
+        end
+
+        it 'reads swift version from a string' do
+          hash = {
+              'name' => 'BananaLib',
+              'version' => '1.0',
+              'swift_versions' => '3.2',
+          }
+          result = Specification.from_hash(hash)
+          result.swift_versions.should == ['3.2']
+        end
+
+        it 'reads swift version from a string' do
+          hash = {
+              'name' => 'BananaLib',
+              'version' => '1.0',
+              'swift_versions' => %w(3.2 4.0)
+          }
+          result = Specification.from_hash(hash)
+          result.swift_versions.should == %w(3.2 4.0)
+        end
+
+        it 'is backwards compatible with pre 1.7.0 swift version' do
+          hash = {
+              'name' => 'BananaLib',
+              'version' => '1.0',
+              'swift_version' => '3.2'
+          }
+          result = Specification.from_hash(hash)
+          result.swift_versions.should == %w(3.2)
+        end
+
+        it 'combines old and new swift version declarations' do
+          hash = {
+              'name' => 'BananaLib',
+              'version' => '1.0',
+              'swift_version' => '3.2',
+              'swift_versions' => '4.0',
+          }
+          result = Specification.from_hash(hash)
+          result.swift_versions.should == %w(4.0 3.2)
+        end
+      end
     end
   end
 end

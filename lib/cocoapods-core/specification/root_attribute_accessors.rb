@@ -40,12 +40,17 @@ module Pod
           end
         end
 
-        # @return [Version] The swift_versions required to use the specification.
+        # @return [Array<Version>] The Swift versions supported by the specification.
         #
-        def swift_version
-          @swift_version ||= if version = attributes_hash['swift_version']
-                               Version.new(version)
-                             end
+        def swift_versions
+          @swift_versions ||= begin
+            swift_versions = Array(attributes_hash['swift_versions'])
+            # Pre 1.7.0, the DSL was singularized as it supported only a single version of Swift. In 1.7.0 the DSL
+            # is now pluralized always and a specification can support multiple versions of Swift. This ensures
+            # we parse the old JSON serialized format and included as part of the Swift versions supported.
+            swift_versions << attributes_hash['swift_version'] unless attributes_hash['swift_version'].nil?
+            swift_versions.map { |swift_version| Version.new(swift_version) }.uniq.sort
+          end
         end
 
         # @return [Requirement] The CocoaPods version required to use the specification.
