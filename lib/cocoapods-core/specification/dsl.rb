@@ -129,18 +129,31 @@ module Pod
 
       #------------------#
 
-      # @!method swift_version=(version)
+      # @!method swift_versions=(version)
       #
-      #   The version of Swift that the specification supports.
+      #   The versions of Swift that the specification supports. A version of '4' will be treated as
+      #   '4.0' by CocoaPods and not '4.1' or '4.2'.
+      #
+      #   **Note** Xcode may decide to treat and display a value of '4.0' as the latest minor version instead,
+      #   for example it can show it as '4.2'.
+      #
+      #   @example
+      #
+      #     spec.swift_versions = ['3.2']
+      #
+      #   @example
+      #
+      #     spec.swift_versions = ['3.2', '4.0']
       #
       #   @example
       #
       #     spec.swift_version = '3.2'
       #
-      #   @param  [String] swift_version
+      #   @param  [String, Array<String>] swift_versions
       #
-      root_attribute :swift_version,
-                     :multi_platform => false
+      root_attribute :swift_versions,
+                     :container => Array,
+                     :singularize => true
 
       #-----------------------------------------------------------------------#
 
