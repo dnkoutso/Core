@@ -212,6 +212,17 @@ module Pod
         end
       end
 
+      # @return [Array<Version>] A list of Swift versions supported for the current
+      #         specification of the pod target.
+      #
+      def swift_versions
+        puts "=hi"
+        # value = value_for_attribute(:swift_versions)
+        # puts "======= #{value}"
+        # value
+        nil
+      end
+
       # Raw values need to be prepared as soon as they are read so they can be
       # safely merged to support multi platform attributes and inheritance
       #-----------------------------------------------------------------------#

@@ -144,13 +144,17 @@ module Pod
       #
       #   @example
       #
+      #     spec.ios.swift_version = '4.0'
+      #
+      #   @example
+      #
       #     spec.swift_version = '3.2'
       #
       #   @param  [String, Array<String>] swift_versions
       #
-      root_attribute :swift_versions,
+      attribute :swift_versions,
                      :container => Array,
-                     :multi_platform => false,
+                     :root_only => true,
                      :singularize => true
 
       #-----------------------------------------------------------------------#

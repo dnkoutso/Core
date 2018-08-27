@@ -69,6 +69,25 @@ module Pod
       end
 
       #----------------#
+      #
+      it 'allows to specify the Swift versions' do
+        @spec.swift_versions = %w(1.0 2.0)
+        @consumer.swift_versions.map(&:to_s).should == %w(1.0 2.0)
+      end
+
+      it 'allows to specify a single Swift version' do
+        @spec.swift_version = '1.0'
+        @consumer.swift_versions.map(&:to_s).should == %w(1.0)
+      end
+
+      it 'allows to specify a Swift version for a given platform' do
+        @spec.ios.swift_versions = '1.0'
+        @consumer.swift_versions.should == %w(1.0)
+        osx_consumer = Specification::Consumer.new(@spec, :osx)
+        osx_consumer.swift_versions.should.be.empty
+      end
+
+      #----------------#
 
       it 'allows to specify the frameworks' do
         @spec.framework = %w(QuartzCore CoreData)
