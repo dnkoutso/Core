@@ -169,6 +169,18 @@ module Pod
         set_hash_value('abstract', abstract)
       end
 
+      # TODO
+      #
+      def linkage_for_pod(pod_name)
+        raw_linkage_hash[pod_name]
+      end
+
+      # TODO
+      #
+      def packaging_for_pod(pod_name)
+        raw_packaging_hash[pod_name]
+      end
+
       #--------------------------------------#
 
       # @return [String] the inheritance mode for this target definition.
@@ -681,6 +693,8 @@ module Pod
         parse_modular_headers(name, requirements)
         parse_configuration_whitelist(name, requirements)
         parse_project_name(name, requirements)
+        parse_linkage(name, requirements)
+        parse_packaging(name, requirements)
 
         if requirements && !requirements.empty?
           pod = { name => requirements }
@@ -691,6 +705,42 @@ module Pod
         get_hash_value('dependencies', []) << pod
         nil
       end
+
+      def parse_linkage(name, requirements)
+        options = requirements.last
+        return requirements unless options.is_a?(Hash)
+
+        linkage = options.delete(:linkage)
+        unless linkage.nil?
+          pod_name = Specification.root_name(name)
+          raw_linkage_hash[pod_name] = linkage
+        end
+
+        requirements.pop if options.empty?
+      end
+
+      def parse_packaging(name, requirements)
+        options = requirements.last
+        return requirements unless options.is_a?(Hash)
+
+        packaging = options.delete(:packaging)
+        unless packaging.nil?
+          pod_name = Specification.root_name(name)
+          raw_packaging_hash[pod_name] = packaging
+        end
+
+        requirements.pop if options.empty?
+      end
+
+      def raw_linkage_hash
+        get_hash_value('linkage', {})
+      end
+      private :raw_linkage_hash
+
+      def raw_packaging_hash
+        get_hash_value('packaging', {})
+      end
+      private :raw_packaging_hash
 
       #--------------------------------------#
 
@@ -782,6 +832,8 @@ module Pod
         link_with_first_target
         inhibit_warnings
         use_modular_headers
+        linkage
+        packaging
         user_project_path
         build_configurations
         project_names
