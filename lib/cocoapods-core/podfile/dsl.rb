@@ -197,6 +197,18 @@ module Pod
       # The values provided to `:testspecs` correspond to the name provided to the
       # `test_spec` DSL attribute in a Podspec.
       #
+      # ### App Specs
+      #
+      # App specs can be optionally included via the `:appspecs` option. By default,
+      # none of a Pod's app specs are included.
+      #
+      # You may specify a list of app spec names to install using the following:
+      #
+      #     pod 'AFNetworking', :appspecs => ['SampleApp']
+      #
+      # The values provided to `:appspecs` correspond to the name provided to the
+      # `app_spec` DSL attribute in a Podspec.
+      #
       # ------
       #
       # Dependencies can be obtained also from external sources.
