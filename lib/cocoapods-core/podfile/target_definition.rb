@@ -693,8 +693,7 @@ module Pod
         parse_modular_headers(name, requirements)
         parse_configuration_whitelist(name, requirements)
         parse_project_name(name, requirements)
-        parse_linkage(name, requirements)
-        parse_packaging(name, requirements)
+        parse_build(name, requirements)
 
         if requirements && !requirements.empty?
           pod = { name => requirements }
@@ -706,27 +705,14 @@ module Pod
         nil
       end
 
-      def parse_linkage(name, requirements)
+      def parse_build(name, requirements)
         options = requirements.last
         return requirements unless options.is_a?(Hash)
 
-        linkage = options.delete(:linkage)
-        unless linkage.nil?
-          pod_name = Specification.root_name(name)
-          raw_linkage_hash[pod_name] = linkage
-        end
-
-        requirements.pop if options.empty?
-      end
-
-      def parse_packaging(name, requirements)
-        options = requirements.last
-        return requirements unless options.is_a?(Hash)
-
-        packaging = options.delete(:packaging)
-        unless packaging.nil?
-          pod_name = Specification.root_name(name)
-          raw_packaging_hash[pod_name] = packaging
+        build_options = options.delete(:build)
+        unless build_options.nil?
+          # pod_name = Specification.root_name(name)
+          # raw_packaging_hash[pod_name] = packaging
         end
 
         requirements.pop if options.empty?
@@ -736,11 +722,6 @@ module Pod
         get_hash_value('linkage', {})
       end
       private :raw_linkage_hash
-
-      def raw_packaging_hash
-        get_hash_value('packaging', {})
-      end
-      private :raw_packaging_hash
 
       #--------------------------------------#
 
