@@ -135,7 +135,7 @@ module Pod
 
     # Returns pod names grouped by the spec repo they were sourced from.
     #
-    # @return [Hash<String, Array<String>>] A hash, where the keys are spec
+    # @return [Hash{String, Array<String>}] A hash, where the keys are spec
     #         repo source URLs (or names), and the values are arrays of pod names.
     #
     # @note   It does not include pods that come from "external sources".
@@ -241,7 +241,7 @@ module Pod
       @pod_versions
     end
 
-    # @return [Hash{String => Version}] A Hash containing the checksums of the
+    # @return [Hash{String => String}] A Hash containing the checksums of the
     #         specification by the name of their root.
     #
     def checksum_data

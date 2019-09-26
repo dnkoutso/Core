@@ -102,7 +102,7 @@ module Pod
       get_hash_value('sources') || []
     end
 
-    # @return [Hash<String, Hash>] The plugins, keyed by name.
+    # @return [Hash{String, Hash}] The plugins, keyed by name.
     #
     def plugins
       get_hash_value('plugins') || {}

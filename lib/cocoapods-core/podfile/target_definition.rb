@@ -528,9 +528,9 @@ module Pod
 
       # Returns the use_modular_headers hash pre-populated with default values.
       #
-      # @return [Hash<String, Array>] Hash with :all key for building all
+      # @return [Hash{String, Array>} Hash with :all key for building all
       #         pods as modules, :for_pods key for building as module per Pod,
-      #         and :not_for_pods key for not biulding as module per Pod.
+      #         and :not_for_pods key for not building as module per Pod.
       #
       def use_modular_headers_hash
         raw_hash = raw_use_modular_headers_hash
@@ -918,7 +918,7 @@ module Pod
 
       # Returns the inhibit_warnings hash pre-populated with default values.
       #
-      # @return [Hash<String, Array>] Hash with :all key for inhibiting all
+      # @return [Hash{String, Array>} Hash with :all key for inhibiting all
       #         warnings, :for_pods key for inhibiting warnings per Pod,
       #         and :not_for_pods key for not inhibiting warnings per Pod.
       #
@@ -954,7 +954,7 @@ module Pod
 
       # Returns the configuration_pod_whitelist hash
       #
-      # @return [Hash<String, Array>] Hash with configuration name as key,
+      # @return [Hash{String, Array>} Hash with configuration name as key,
       #         array of pod names to be linked in builds with that configuration
       #         as value.
       #
