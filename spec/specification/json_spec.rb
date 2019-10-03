@@ -67,6 +67,7 @@ module Pod
       it 'can round-trip' do
         spec = Specification.new do |s|
           s.name = 'BananaLib'
+          s.platform = :ios, '9.0'
           s.app_spec 'App'
           s.test_spec 'Tests'
           s.version = '17.0'
