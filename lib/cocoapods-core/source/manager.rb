@@ -313,7 +313,7 @@ module Pod
                         TrunkSource.new(key)
                       when (key + '.url').exist?
                         CDNSource.new(key)
-                      when key.start_with?('file://')
+                      when key.to_s.start_with?('file://')
                         LocalSource.new(key)
                       else
                         Source.new(key)

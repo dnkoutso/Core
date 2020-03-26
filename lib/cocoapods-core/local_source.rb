@@ -1,4 +1,6 @@
 module Pod
+  # The LocalSource class is responsible to manage a collection of podspecs from a given path.
+  #
   class LocalSource < Source
     def url
       "file://#{repo}"
@@ -12,7 +14,7 @@ module Pod
       repo
     end
 
-    def pod_path(name)
+    def pod_path(_name)
       repo
     end
 
@@ -24,10 +26,11 @@ module Pod
       unless specs_dir.exist?
         raise Informative, "Unable to find a source named: `#{name}`"
       end
-      all_specs.map(&:name).uniq.sort
+      @pods ||= all_specs.map(&:name).uniq.sort
     end
 
-    def pods_for_specification_paths(spec_paths)
+    def pods_for_specification_paths(_spec_paths)
+      # This method is invoked for updating a search index which local sources dont support.
       []
     end
 
@@ -74,7 +77,7 @@ module Pod
       Specification::Set.new(query, self) if all_specs.any? { |s| s.name == query }
     end
 
-    def update(show_output)
+    def update(_show_output)
       []
     end
 

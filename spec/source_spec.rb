@@ -18,7 +18,7 @@ module Pod
         @source.type.should == 'git'
       end
 
-      it 'return its type when git' do
+      it 'return type as file type when its not a git repo' do
         @path = fixture('spec-repos/test_empty_dir_repo')
         @source = Source.new(@path)
         @source.type.should == 'file system'
@@ -39,7 +39,7 @@ module Pod
         @source.pods.should == %w(BananaLib Faulty_spec IncorrectPath JSONKit JSONSpec React)
       end
 
-      it "raises if the repo doesn't exists" do
+      it "raises if the repo doesn't exist" do
         @path = fixture('spec-repos/non_existing')
         @source = Source.new(@path)
         should.raise Informative do
