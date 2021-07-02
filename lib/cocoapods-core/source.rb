@@ -371,6 +371,10 @@ module Pod
       repo.join('.git').exist? && !repo_git(%w(rev-parse HEAD)).empty?
     end
 
+    def local?
+      false
+    end
+
     def indexable?
       true
     end

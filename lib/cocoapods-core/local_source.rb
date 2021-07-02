@@ -42,12 +42,15 @@ module Pod
     end
 
     def specification_path(name, version)
-      spec = all_specs.find { |s| s.name == name && s.version == version }
+      spec = all_specs.find do |s|
+        # ADD A TEST
+        s.name == name && s.version == Pod::Version.create(version)
+      end
       if spec.nil?
         raise StandardError, "Unable to find the specification #{name} " \
           "(#{version}) in the #{self.name} source."
       end
-      Pathname.new(spec.defined_in_file)
+      Pathname.new(spec.defined_in_file).expand_path
     end
 
     def all_specs
@@ -87,6 +90,10 @@ module Pod
 
     def git?
       false
+    end
+
+    def local?
+      true
     end
 
     def indexable?

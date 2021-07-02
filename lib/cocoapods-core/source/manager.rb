@@ -51,6 +51,15 @@ module Pod
         dirs.map { |repo| source_from_path(repo) }
       end
 
+      # Adds the provided source to the list of sources
+      #
+      # @param [Source] source the source to add
+      #
+      def add_source(source)
+        all << source unless all.any? { |s| s.url == source || s.name == source.name }
+        @sources_by_path[source.repo] = source
+      end
+
       # @return [Array<Source>] The list of all the sources known to this
       #         installation of CocoaPods.
       #
@@ -313,8 +322,6 @@ module Pod
                         TrunkSource.new(key)
                       when (key + '.url').exist?
                         CDNSource.new(key)
-                      when key.to_s.start_with?('file://')
-                        LocalSource.new(key)
                       else
                         Source.new(key)
                       end
